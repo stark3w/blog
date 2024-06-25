@@ -25,12 +25,6 @@ return new class extends Migration
             $table->index('category_id', 'post_category_idx');
             $table->foreign('category_id', 'post_category_fk')->references('id')->on('categories');
 
-            $table->unsignedBigInteger('tag_id')->nullable();
-            $table->index('tag_id', 'post_tag_idx');
-            $table->foreign('tag_id', 'post_tag_fk')->references('id')->on('tags');
-
-
-
 
             $table->softDeletes();
         });
