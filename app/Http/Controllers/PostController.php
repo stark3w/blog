@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Posts;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class PostController extends Controller
 {
@@ -13,8 +13,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-        return view('home', compact('posts'));
+        $posts = Post::paginate(10);
+        return view('posts.index', compact('posts'));
+
     }
 
     /**
@@ -36,10 +37,14 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(Post $post, Request $request)
     {
-        //
+        $previousPaginationUrl = $request->fullUrl();
+        Session::put('previous_pagination_url', $previousPaginationUrl);
+
+        return view('posts.show', compact('post'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -64,4 +69,5 @@ class PostController extends Controller
     {
         //
     }
+
 }

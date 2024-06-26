@@ -1,5 +1,12 @@
 <?php
 
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
 
-Route::resource('/', \App\Http\Controllers\Posts\PostController::class);
+Route::get('/', [PublicController::class, 'index'])->name('home');
+
+Route::resource('posts', PostController::class);
+
+
+
