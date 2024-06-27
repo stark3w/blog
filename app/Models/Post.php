@@ -10,7 +10,7 @@ class Post extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $fillable = [];
+    protected $guarded = false;
 
     public function category()
     {

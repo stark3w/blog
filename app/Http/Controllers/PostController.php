@@ -13,7 +13,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(10);
+        $posts = Post::orderBy('created_at', 'desc')->paginate(10);
         return view('posts.index', compact('posts'));
 
     }
@@ -23,7 +23,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -31,7 +31,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Post::create($request->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'image_path' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]));
+
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -39,8 +45,6 @@ class PostController extends Controller
      */
     public function show(Post $post, Request $request)
     {
-        $previousPaginationUrl = $request->fullUrl();
-        Session::put('previous_pagination_url', $previousPaginationUrl);
 
         return view('posts.show', compact('post'));
     }
@@ -51,7 +55,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -59,7 +63,9 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $title = Post::update($request->all());
+        dd($title);
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -67,7 +73,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect()->route('posts.index');
     }
 
 }

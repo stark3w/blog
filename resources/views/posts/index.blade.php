@@ -7,7 +7,7 @@
     <div class="row p-5 mt-6 row-cols-1 row-cols-md-5 g-4">
         @foreach($posts as $post)
         <div class="col ">
-            <a href="{{ route('posts.show', [$post->id, 'previous_url' => url()->current()]) }}" class="text-decoration-none">
+            <a href="{{ route('posts.show', $post->id) }}" class="text-decoration-none">
             <div class="card h-100 shadow-sm grow-on-hover">
                 <div class="position-relative">
                 <img src="{{ $post->image_path }}" class="card-img-top" >
