@@ -8,10 +8,9 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
-use App\Models\Like;
-use Illuminate\Support\Facades\Session;
 
-class PostController extends Controller
+
+class PostController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -42,12 +41,7 @@ class PostController extends Controller
     {
         $data = $request->validated();
 
-        $tags = $data['tags'];
-        unset($data['tags']);
-
-        $post = Post::create($data);
-
-        $post->tags()->attach($tags);
+        $this->service->store($data);
 
         return redirect()->route('posts.index');
     }
@@ -78,11 +72,7 @@ class PostController extends Controller
     {
         $data = $request->validated();
 
-        $tags = $data['tags'];
-        unset($data['tags']);
-
-        $post->update($data);
-        $post->tags()->sync($tags);
+        $this->service->update($post, $data);
 
 
         return redirect()->route('posts.index');
