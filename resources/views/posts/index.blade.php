@@ -21,8 +21,9 @@
                         {{ $post->category->name ?? 'No category' }}
                     </p>
                 </div>
-                <div class="card-footer">
+                <div class="card-footer d-flex justify-content-between">
                     <small class="text-body-secondary">{{ $post->created_at }}</small>
+                    <small class="text-body-secondary"> Просмотров: {{ $post->views }}</small>
                 </div>
             </div>
             </a>

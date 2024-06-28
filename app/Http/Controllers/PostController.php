@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Post\StoreRequest;
+use App\Http\Requests\Post\UpdateRequest;
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
+use App\Models\Like;
 use Illuminate\Support\Facades\Session;
 
 class PostController extends Controller
@@ -14,6 +19,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::orderBy('created_at', 'desc')->paginate(10);
+
         return view('posts.index', compact('posts'));
 
     }
@@ -23,19 +29,25 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $categories = Category::all();
+        $tags = Tag::all();
+
+        return view('posts.create', compact('categories', 'tags'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        Post::create($request->validate([
-            'title' => 'required',
-            'content' => 'required',
-            'image_path' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]));
+        $data = $request->validated();
+
+        $tags = $data['tags'];
+        unset($data['tags']);
+
+        $post = Post::create($data);
+
+        $post->tags()->attach($tags);
 
         return redirect()->route('posts.index');
     }
@@ -45,7 +57,6 @@ class PostController extends Controller
      */
     public function show(Post $post, Request $request)
     {
-
         return view('posts.show', compact('post'));
     }
 
@@ -55,16 +66,25 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('posts.edit', compact('post'));
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(UpdateRequest $request, Post $post)
     {
-        $title = Post::update($request->all());
-        dd($title);
+        $data = $request->validated();
+
+        $tags = $data['tags'];
+        unset($data['tags']);
+
+        $post->update($data);
+        $post->tags()->sync($tags);
+
+
         return redirect()->route('posts.index');
     }
 
@@ -77,5 +97,6 @@ class PostController extends Controller
 
         return redirect()->route('posts.index');
     }
+
 
 }

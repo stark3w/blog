@@ -24,6 +24,15 @@
                         <button type="submit" class="btn btn-danger">Удалить</button>
                     </form>
                 </div>
+                <div class="mt-3">
+                    <h3>Тэги:</h3>
+                    <ul>
+                    @foreach($post->tags as $tag)
+                        <li>{{ $tag->name }}</li>
+
+                    @endforeach
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

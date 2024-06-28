@@ -10,7 +10,7 @@ class Post extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $guarded = false;
+    protected $fillable = ['title', 'content', 'image_path', 'likes', 'views','category_id'];
 
     public function category()
     {
@@ -21,5 +21,6 @@ class Post extends Model
     {
         return $this->belongsToMany(Tag::class,'post_tags','post_id','tag_id');
     }
+
 
 }
