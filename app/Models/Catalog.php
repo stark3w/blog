@@ -6,14 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Category extends Model
+class Catalog extends Model
 {
     use HasFactory;
+    protected $fillable = [];
 
-    protected $fillable = ['name'];
-
-    public function posts()
-    {
-        return $this->hasMany(Post::class);
+    public function products(){
+        return $this->hasMany(Product::class);
     }
+
 }

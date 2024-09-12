@@ -11,18 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('post_tags', function (Blueprint $table) {
+        Schema::create('product_tags', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('post_id');
+            $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('tag_id');
-            $table->timestamps();
-
-
-
-            $table->foreign('post_id')->references('id')->on('Post')->onDelete('cascade');
+            $table->index('product_id', 'product_tag_product_idx');
+            $table->index('tag_id', 'product_tag_tag_idx');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
-
-            $table->unique(['post_id', 'tag_id']);
         });
     }
 
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('post_tags');
+        Schema::dropIfExists('product_tags');
     }
 };
