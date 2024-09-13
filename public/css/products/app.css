@@ -1,0 +1,33 @@
+
+/* Общие стили */
+.container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Карточки чая */
+.tea-card-img {
+    width: 270px;
+    height: 470px;
+    object-fit: cover;
+}
+
+.card-footer {
+    background-color: transparent;
+}
+
+/* Стили для звезд */
+.checked {
+    color: orange;
+}
+
+/* Для контейнера с фильтрами */
+.form-range {
+    margin-bottom: 15px;
+}
+
+.form-select {
+    margin-bottom: 15px;
+}
+

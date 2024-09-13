@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\Post\Service;
-use Illuminate\Http\Request;
+
+use App\Services\Product\Service;
 
 class BaseController extends Controller
 {
     public $service;
 
-    /**
-     * @param $service
-     */
-    public function __construct(Service $service)
-    {
+    public function __construct(Service $service){
         $this->service = $service;
     }
+
 }

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('image')->nullable();
             $table->integer('stock')->default(0);
             $table->boolean('active')->default(true);
+            $table->softDeletes();
             $table->timestamps();
 
             $table->index('catalog_id','product_catalog_idx');
