@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         Catalog::factory(5)->create();
         Tag::factory(20)->create();
-        Product::factory(3)->create()->each(function ($product) {
+        Product::factory(12)->create()->each(function ($product) {
 
             $tags = Tag::inRandomOrder()->take(rand(1, 20))->pluck('id');
 

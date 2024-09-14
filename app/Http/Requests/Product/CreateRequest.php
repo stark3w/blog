@@ -25,9 +25,8 @@ class CreateRequest extends FormRequest
             'name' => 'required',
             'description' => 'required',
             'price' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'stock' => 'required',
-            'active' => 'required',
+            'tags' => 'required',
+            'catalog_id' => 'required',
         ];
     }
 }

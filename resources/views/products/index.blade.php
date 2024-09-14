@@ -4,14 +4,11 @@
 @section('content')
     <div class="container py-4">
         <div class="row justify-content-center">
-            <!-- Фильтры слева -->
             <div class="col-md-3">
-                <!-- Фильтр по цене -->
                 <div class="mb-4">
                     <h5>Цена</h5>
                     <input type="range" class="form-range" min="0" max="500" step="10">
                 </div>
-                <!-- Фильтр по вкусу чая -->
                 <div class="mb-4">
                     <h5>Вкус чая</h5>
                     <select class="form-select">
@@ -22,7 +19,6 @@
                         <option value="4">Ягодный чай</option>
                     </select>
                 </div>
-                <!-- Дополнительные фильтры -->
                 <div class="mb-4">
                     <h5>Сорт чая</h5>
                     <select class="form-select">
@@ -43,33 +39,30 @@
                 </div>
             </div>
 
-            <!-- Карточки чая справа -->
-            <div class="col-md-9 d-flex justify-content-center">
+            <div class="col-md-9">
                 <div class="row row-cols-1 row-cols-md-3 g-4">
+                    @foreach($products as $product)
                         <div class="col">
-                            @foreach($products as $product)
-                                <div class="card" style="width: 18rem;">
-                                    <img src="..." class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    </div>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">An item</li>
-                                        <li class="list-group-item">A second item</li>
-                                        <li class="list-group-item">A third item</li>
-                                    </ul>
-                                    <div class="card-body">
-                                        <a href="#" class="card-link">Card link</a>
-                                        <a href="#" class="card-link">Another link</a>
-                                    </div>
+                            <a href="{{ route('products.show', $product->id) }}" class="text-decoration-none text-dark">
+                            <div class="card h-100 d-flex flex-column">
+                                <img src="{{ $product->image }}" class="card-img-top tea-card-img" alt="{{ $product->name }}">
+                                <div class="card-body" style="min-height: 150px;">
+                                    <h5 class="card-title">{{ $product->name }}</h5>
                                 </div>
-                            @endforeach
+                                <div class="card-footer mt-auto d-flex justify-content-between align-items-center">
+                                    <span>★★★★☆</span>
+                                    <span>{{ $product->price }} руб.</span>
+                                </div>
+                                <div class=" mt-auto">
+                                <a href="#" class="btn btn-primary w-100 mt-2">Добавить в корзину</a>
+                                </div>
+                            </div>
+                            </a>
                         </div>
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
-
-
 @endsection
+

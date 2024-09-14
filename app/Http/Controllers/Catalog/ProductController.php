@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Catalog;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Product\CreateRequest;
 use App\Http\Requests\Product\UpdateRequest;
+use App\Models\Catalog;
 use App\Models\Product;
+use App\Models\Tag;
 
 class ProductController extends BaseController
 {
@@ -24,7 +26,11 @@ class ProductController extends BaseController
      */
     public function create()
     {
-        return view('products.create');
+        $catalogs = Catalog::all();
+
+        $tags = Tag::all();
+
+        return view('products.create', compact('catalogs', 'tags'));
     }
 
     /**
@@ -32,9 +38,11 @@ class ProductController extends BaseController
      */
     public function store(CreateRequest $request)
     {
+
         $data = $request->validated();
 
         $this->service->store($data);
+
 
         return redirect()->route('products.index');
 
@@ -45,7 +53,9 @@ class ProductController extends BaseController
      */
     public function show(string $id)
     {
-        return view('products.show');
+        $product = Product::findOrFail($id);
+
+        return view('products.show', compact('product'));
     }
 
     /**
@@ -53,20 +63,24 @@ class ProductController extends BaseController
      */
     public function edit(string $id)
     {
-        return view('products.edit');
+        $product = Product::findOrFail($id);
+        $catalogs = Catalog::all();
+        $tags = Tag::all();
+
+        return view('products.edit', compact('product', 'catalogs', 'tags'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request, Product $product, string $id)
+    public function update(UpdateRequest $request, Product $product)
     {
         $data = $request->validated();
 
         $this->service->update($data,$product);
 
 
-        return view('products.update');
+        return redirect()->route('products.index');
     }
 
     /**
