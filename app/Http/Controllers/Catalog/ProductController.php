@@ -8,17 +8,21 @@ use App\Http\Requests\Product\UpdateRequest;
 use App\Models\Catalog;
 use App\Models\Product;
 use App\Models\Tag;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ProductController extends BaseController
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($catalog_slug)
     {
-        $products = Product::paginate(12);
+        $catalog = Catalog::where('slug', $catalog_slug)->firstOrFail();
 
-        return view('products.index', compact('products'));
+        $products = Product::where('catalog_id', $catalog->id)->paginate(12);
+
+        return view('products.index', compact('products', 'catalog'));
     }
 
     /**
@@ -26,6 +30,8 @@ class ProductController extends BaseController
      */
     public function create()
     {
+        Gate::authorize('create', Product::class);
+
         $catalogs = Catalog::all();
 
         $tags = Tag::all();
@@ -38,24 +44,32 @@ class ProductController extends BaseController
      */
     public function store(CreateRequest $request)
     {
+        Gate::authorize('create', Product::class);
 
         $data = $request->validated();
 
-        $this->service->store($data);
+       $product = $this->service->store($data);
+
+       $catalog = Catalog::findOrFail($product->catalog_id);
 
 
-        return redirect()->route('products.index');
+        return redirect()->route('products.show', [
+            'product_slug' => $product->slug,
+            'catalog_slug' => $catalog->slug
+        ]);
 
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($catalog_slug, $product_slug)
     {
-        $product = Product::findOrFail($id);
+        $catalog = Catalog::where('slug', $catalog_slug)->firstOrFail();
 
-        return view('products.show', compact('product'));
+        $product  = Product::where('slug', $product_slug)->firstOrFail();
+
+        return view('products.show', compact('product', 'catalog'));
     }
 
     /**
@@ -63,8 +77,12 @@ class ProductController extends BaseController
      */
     public function edit(string $id)
     {
+        Gate::authorize('update', Product::class);
+
         $product = Product::findOrFail($id);
+
         $catalogs = Catalog::all();
+
         $tags = Tag::all();
 
         return view('products.edit', compact('product', 'catalogs', 'tags'));
@@ -75,6 +93,8 @@ class ProductController extends BaseController
      */
     public function update(UpdateRequest $request, Product $product)
     {
+        Gate::authorize('update', Product::class);
+
         $data = $request->validated();
 
         $this->service->update($data,$product);
@@ -88,8 +108,14 @@ class ProductController extends BaseController
      */
     public function destroy(string $id)
     {
-        $id->delete();
+        Gate::authorize('delete', Product::class);
 
-        return redirect()->route('products.index');
+        $product = Product::findOrFail($id);
+
+        $catalog = Catalog::findOrFail($product->catalog_id);
+
+        $product->delete();
+
+        return redirect()->route('products.index', ['catalog_slug' => $catalog->slug]);
     }
 }

@@ -28,6 +28,9 @@
                 <ul class="navbar-nav me-auto mb-2 ml-3 mb-lg-0 ms-3">
                     <li class="nav-item">
                         <a class="btn btn-outline-success me-2" aria-current="page" href="{{ route('catalog.index') }}">CATALOG</a>
+                        @can('create', \App\Models\Product::class)
+                        <a class="btn btn-outline-success me-2" aria-current="page" href="{{ route('products.create') }}">ADD PRODUCT</a>
+                        @endcan
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"

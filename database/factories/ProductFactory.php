@@ -19,6 +19,7 @@ class ProductFactory extends Factory
     {
         return [
             'name' => $this->faker->word(),
+            'slug' => $this->faker->slug(),
             'description' => $this->faker->paragraph(),
             'catalog_id' => Catalog::get()->random()->id,
             'price' => $this->faker->numberBetween(1000, 999999),

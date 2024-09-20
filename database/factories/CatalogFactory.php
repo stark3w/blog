@@ -18,6 +18,7 @@ class CatalogFactory extends Factory
     {
         return [
             'name' => $this->faker->sentence(2),
+            'slug' => $this->faker->slug(),
             'image' => $this->faker->imageUrl(),
         ];
     }

@@ -27,6 +27,18 @@
                     <div class="mb-3">
                         <a href="#" class="btn btn-success w-100">Купить</a>
                     </div>
+                    @can('update', \App\Models\Product::class)
+                    <div class="mb-3">
+                        <a href="{{ route('products.edit', $product->id) }}" class="btn btn-success w-100">Редактировать</a>
+                    </div>
+                    @endcan
+                    @can('delete', \App\Models\Product::class)
+                        <form action="{{ route('products.destroy', $product->id) }}" method="post" onsubmit="return confirm('Точно удаляем?')">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="btn btn-outline-danger w-100" >Удалить товар</button>
+                        </form>
+                    @endcan
                 </div>
             </div>
         </div>

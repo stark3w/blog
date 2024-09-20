@@ -13,8 +13,11 @@ Route::get('/', [PublicController::class, 'index'])
     ->name('home');
 
 Route::resource('catalog', CatalogController::class)->only(['index']);
+Route::get('/catalog/{catalog_slug}/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/catalog/{catalog_slug}/products/{product_slug}', [ProductController::class, 'show'])->name('products.show');
 
-Route::resource('products', ProductController::class);
+Route::resource('products', ProductController::class)
+    ->only(['create', 'store', 'edit', 'update', 'destroy']);
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisterController::class, 'create'])
@@ -41,5 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/login', [LoginController::class, 'destroy'])
         ->name('logout');
 });
+
+
 
 
