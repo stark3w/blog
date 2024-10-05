@@ -7,12 +7,18 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title', 'iCATCH')</title>
     <link href="{{ asset('css/catalog/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/products/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/product/app.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body class="bg-dark text-white">
 <div>
@@ -29,7 +35,8 @@
                     <li class="nav-item">
                         <a class="btn btn-outline-success me-2" aria-current="page" href="{{ route('catalog.index') }}">CATALOG</a>
                         @can('create', \App\Models\Product::class)
-                        <a class="btn btn-outline-success me-2" aria-current="page" href="{{ route('products.create') }}">ADD PRODUCT</a>
+                            <a class="btn btn-outline-success me-2" aria-current="page"
+                               href="{{ route('products.create') }}">ADD PRODUCT</a>
                         @endcan
                     </li>
                     <li class="nav-item dropdown">
@@ -48,7 +55,8 @@
                     </li>
                 </ul>
                 <form action="{{ route('search') }}" class="d-flex" role="search">
-                    <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control me-2" name="search" type="search" placeholder="Search"
+                           aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </div>

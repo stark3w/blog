@@ -5,3 +5,17 @@
 .hover-scale:hover {
     transform: scale(1.05);
 }
+
+.no-layout-impact {
+    display: contents;
+}
+
+#loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    font-size: 24px;
+}
+

@@ -40,4 +40,19 @@ class Product extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
+    public function flavor()
+    {
+        return $this->belongsTo(Flavor::class);
+    }
+
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class);
+    }
 }

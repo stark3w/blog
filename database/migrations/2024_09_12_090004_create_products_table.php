@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('slug');
             $table->text('description');
             $table->unsignedBigInteger('catalog_id');
+            $table->unsignedBigInteger('flavor_id');
+            $table->unsignedBigInteger('grade_id');
+            $table->unsignedBigInteger('brand_id');
             $table->decimal('price', 10, 2)->nullable();
             $table->text('image')->nullable();
             $table->softDeletes();
@@ -25,6 +28,9 @@ return new class extends Migration
             $table->index('catalog_id','product_catalog_idx');
 
             $table->foreign('catalog_id')->references('id')->on('catalogs')->onDelete('cascade');
+            $table->foreign('flavor_id')->references('id')->on('flavors')->onDelete('cascade');
+            $table->foreign('grade_id')->references('id')->on('grades')->onDelete('cascade');
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
         });
     }
 

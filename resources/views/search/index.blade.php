@@ -2,12 +2,12 @@
 @section('title','Product - iCATCH')
 
 @section('content')
-    @vite('resources/js/filters/catalogFilter.js')
+    @vite('resources/js/filters/filters.js')
     <div class="container py-4">
         <div class="row justify-content-center">
-            @include('products.partials.filters')
+            @include('search.partials.filters')
 
-            @include('products.partials.products-list')
+            @include('search.partials.products-list')
         </div>
     </div>
 @endsection

@@ -6,6 +6,8 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Catalog\CatalogController;
 use App\Http\Controllers\Catalog\ProductController;
+use App\Http\Controllers\Filter\CatalogFilterController;
+use App\Http\Controllers\Filter\FilterController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\Search\SearchController;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +27,10 @@ Route::get('/found-products/', [SearchController::class,'index'])
     ->name('search');
 Route::get('/found-products/{product_slug}', [SearchController::class, 'show'])
     ->name('found.show');
+
+Route::get('/filter-products', [FilterController::class, 'index']);
+
+Route::get('/filter-products/catalog/products', [CatalogFilterController::class, 'index']);
 
 
 Route::middleware('guest')->group(function () {

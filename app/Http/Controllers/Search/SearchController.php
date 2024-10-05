@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Search;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Catalog;
+use App\Models\Flavor;
+use App\Models\Grade;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -13,12 +16,16 @@ class SearchController extends Controller
     {
         $search = $request->input('search');
 
+
         $products = Product::when($search, function ($query) use ($search) {
             return $query->where('name', 'like', '%' . $search . '%');
         })->paginate(12);
 
+        $flavors = Flavor::withCount('products')->get();
+        $grades = Grade::withCount('products')->get();
+        $brands = Brand::withCount('products')->get();
 
-        return view('products.search.index', compact('products'));
+        return view('search.index', compact('products', 'flavors', 'brands', 'grades'));
     }
 
     public function show($product_slug)

@@ -3,7 +3,10 @@
 namespace App\Services\Product;
 
 
+use App\Models\Brand;
 use App\Models\Catalog;
+use App\Models\Flavor;
+use App\Models\Grade;
 use App\Models\Product;
 use App\Models\Tag;
 
@@ -15,7 +18,18 @@ class Service
         $catalog = Catalog::where('slug', $catalog_slug)->firstOrFail();
         $products = Product::where('catalog_id', $catalog->id)->paginate(12);
 
-        return compact('products', 'catalog');
+        $flavors = Flavor::withCount(['products' => function ($query) use ($catalog) {
+            $query->where('catalog_id', $catalog->id);
+        }])->get();
+        $brands = Brand::withCount(['products' => function ($query) use ($catalog) {
+            $query->where('catalog_id', $catalog->id);
+        }])->get();
+
+        $grades = Grade::withCount(['products' => function ($query) use ($catalog) {
+            $query->where('catalog_id', $catalog->id);
+        }])->get();
+
+        return compact('products', 'catalog', 'flavors', 'brands', 'grades');
     }
 
     public function create()
