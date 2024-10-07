@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Product;
+namespace App\Http\Controllers\Filter;
 
-use App\Services\Product\Service;
+use App\Services\Filter\Service;
 
 class BaseController
 {

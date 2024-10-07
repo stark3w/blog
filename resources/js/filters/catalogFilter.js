@@ -7,7 +7,6 @@ $(document).ready(function () {
         let selectedBrands = [];
 
 
-
         $('.form-check-input:checked').each(function () {
             let category = $(this).attr('id').match(/^\D+/)[0];
 
@@ -18,15 +17,6 @@ $(document).ready(function () {
             } else if (category === 'brand') {
                 selectedBrands.push($(this).val());
             }
-        });
-
-
-
-        console.log({
-            flavors: selectedFlavors,
-            grades: selectedGrades,
-            brands: selectedBrands,
-            catalog_id: catalogId
         });
 
 
